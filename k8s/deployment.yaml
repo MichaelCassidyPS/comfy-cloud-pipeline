@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hoodie-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hoodie-api
+  template:
+    metadata:
+      labels:
+        app: hoodie-api
+    spec:
+      containers:
+      - name: hoodie-api
+        image: <IMAGE_URI>
+        ports:
+        - containerPort: 8000
