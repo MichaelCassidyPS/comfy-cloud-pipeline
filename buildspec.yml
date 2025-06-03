@@ -1,0 +1,19 @@
+version: 0.2
+env:
+  variables:
+    IMAGE_REPO: "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/hoodie-api"
+    IMAGE_TAG: "latest"
+phases:
+  pre_build:
+    commands:
+      - aws ecr get-login-password --region $AWS_REGION \
+        | docker login --username AWS --password-stdin $IMAGE_REPO
+  build:
+    commands:
+      - docker build -t $IMAGE_REPO:$IMAGE_TAG .
+  post_build:
+    commands:
+      - docker push $IMAGE_REPO:$IMAGE_TAG
+      - printf '{"ImageURI":"%s"}' $IMAGE_REPO:$IMAGE_TAG > imageDetail.json
+artifacts:
+  files: imageDetail.json
