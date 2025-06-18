@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hoodie-api
+  labels:
+    app: hoodie-api
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: hoodie-api
@@ -13,7 +15,19 @@ spec:
         app: hoodie-api
     spec:
       containers:
-      - name: hoodie-api
-        image: <IMAGE_URI>
-        ports:
-        - containerPort: 8000
+        - name: hoodie-api
+          image: <IMAGE_URI>          # patched at deploy time
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hoodie-api
+spec:
+  selector:
+    app: hoodie-api
+  ports:
+    - port: 8000
+      targetPort: 8080
+  type: ClusterIP
