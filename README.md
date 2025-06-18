@@ -1,4 +1,3 @@
-# comfy-cloud-pipeline
 # Comfy Cloud – Hoodie Pipeline (Module 1)
 
 Minimal instructions to get you from **zero** to a running dev pipeline so you can follow the course demo.  
@@ -10,9 +9,9 @@ Nothing extra—just the pieces the video asks for.
 
 | Tool | Version |
 |------|---------|
-| **AWS CLI** | 
-| **eksctl** | 
-| **kubectl** | 
+| **AWS CLI** | ≥ 2.13 |
+| **eksctl** | ≥ 0.161 |
+| **kubectl** | ≥ 1.29 |
 
 You’ll also need an AWS account with permissions to create EKS, ECR, IAM roles, and CodeConnections.
 
@@ -83,3 +82,4 @@ With the cluster, repo, IAM roles, GitHub connection, and services in place you 
 * Patch the image URI into the Deployment.  
 * Forward port 8000 and open **http://localhost:8000** to see **“Hello, Hoodie!”**.
 
+That’s it—no extra steps.
