@@ -1,7 +1,6 @@
 # Comfy Cloud – Hoodie Pipeline (Module 1)
 
-Minimal instructions to get you from **zero** to a running dev pipeline so you can follow the course demo.  
-Nothing extra—just the pieces the video asks for.
+Here are some instructions to get you running a dev pipeline so you can follow the course demo.  
 
 ---
 
