@@ -19,20 +19,36 @@ You’ll also need an AWS account with permissions to create EKS, ECR, IAM roles
 
 ## One-time bootstrap (~5 min)
 
-1. **Create the EKS cluster**
+1. **Install `eksctl` (only if `eksctl version` is missing)**
+
+   ~~~bash
+   # For x86_64 CloudShell; set ARCH=arm64 if you’re on Graviton.
+   ARCH=amd64
+   PLATFORM=$(uname -s)_$ARCH
+   curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_${PLATFORM}.tar.gz"
+   tar -xzf eksctl_${PLATFORM}.tar.gz -C /tmp
+   mkdir -p $HOME/bin
+   mv /tmp/eksctl $HOME/bin/
+   rm eksctl_${PLATFORM}.tar.gz
+   echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+   source ~/.bashrc
+   eksctl version      # should now print the version
+   ~~~
+
+2. **Create the EKS cluster**
 
    ~~~bash
    eksctl create cluster --name dev-eks --region us-east-1 \
      --managed --nodes 2 --node-type t3.medium
    ~~~
 
-2. **Create a private ECR repo**
+3. **Create a private ECR repo**
 
    ~~~bash
    aws ecr create-repository --repository-name hoodie-api
    ~~~
 
-3. **Create two IAM roles**
+4. **Create two IAM roles**
 
    *Build role* and *Pipeline role* both use AdministratorAccess (simplest for the course).
 
@@ -48,7 +64,7 @@ You’ll also need an AWS account with permissions to create EKS, ECR, IAM roles
      --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
    ~~~
 
-4. **Connect your fork via CodeConnections**
+5. **Connect your fork via CodeConnections**
 
    ~~~bash
    aws codeconnections create-connection \
@@ -56,7 +72,7 @@ You’ll also need an AWS account with permissions to create EKS, ECR, IAM roles
      --connection-name HoodiePipelineConnection
    ~~~
 
-All four commands are safe to rerun if you need to.
+All five commands are safe to rerun if you need to.
 
 ---
 
