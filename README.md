@@ -19,7 +19,7 @@ You’ll also need an AWS account with permissions to create EKS, ECR, IAM roles
 
 ## One-time bootstrap (~10 min)
 
-1. **Clone the repo & switch into it (required for the JSON files that follow)**
+1. **Clone the repo & switch into the comfy-cloud-pipeline directory**
 
    ```bash
    git clone https://github.com/MichaelCassidyPS/comfy-cloud-pipeline.git || true
