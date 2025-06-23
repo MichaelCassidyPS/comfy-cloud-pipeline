@@ -12,7 +12,7 @@ Here are some instructions to get you running a dev pipeline so you can follow t
 | **eksctl** | ≥ 0.161 |
 | **kubectl** | ≥ 1.29 |
 
-If you run the lab in AWS CloudShell, these three tools are already installed and pre‑authenticated, so you can skip any local setup.
+If you run the lab in AWS CloudShell, you'll need to install eksctl (steps below).
 You’ll also need an AWS account with permissions to create EKS, ECR, IAM roles, and CodeConnections.
 
 ---
