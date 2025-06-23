@@ -97,15 +97,6 @@ aws iam attach-role-policy --role-name ComfyPipelineRole \
 
 ~~~
 
-
-6. **Connect your fork via CodeConnections**
-
-   ~~~bash
-   aws codeconnections create-connection \
-     --provider-type GitHub \
-     --connection-name HoodiePipelineConnection
-   ~~~
-
 All five commands are safe to rerun if you need to.
 
 ---
