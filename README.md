@@ -118,6 +118,7 @@ Apply the manifests in **k8s/** (added to this repo):
 kubectl apply -f k8s/checkout-deployment.yaml
 kubectl apply -f k8s/payment-deployment.yaml
 ~~~
+> **Run each command on its own line in CloudShell (don’t paste them together).**
 
 Both Deployments start **2 replicas** and expose ClusterIP services.
 
