@@ -2,6 +2,10 @@
 version: 0.2
 
 phases:
+  install:
+    commands:
+      - nohup /usr/local/bin/dockerd-entrypoint.sh &>/tmp/dockerd.log &
+      - timeout 30 sh -c "until docker info; do sleep 3; done"
   pre_build:
     commands:
       - echo Determining AWS account and Region
