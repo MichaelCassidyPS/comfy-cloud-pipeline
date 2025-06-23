@@ -69,19 +69,34 @@ eksctl version
 
 5. **Create two IAM roles**
 
-   *Build role* and *Pipeline role* both use AdministratorAccess (simplest for the course).
+~~~bash
+# Build role for CodeBuild
+aws iam create-role --role-name ComfyBuildRole \
+  --assume-role-policy-document '{
+    "Version":"2012-10-17",
+    "Statement":[{
+      "Effect":"Allow",
+      "Principal":{"Service":"codebuild.amazonaws.com"},
+      "Action":"sts:AssumeRole"
+    }]
+  }'
+aws iam attach-role-policy --role-name ComfyBuildRole \
+  --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
 
-   ~~~bash
-   aws iam create-role --role-name ComfyBuildRole \
-     --assume-role-policy-document file://iam/trust-build.json
-   aws iam attach-role-policy --role-name ComfyBuildRole \
-     --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
+# Pipeline role for CodePipeline
+aws iam create-role --role-name ComfyPipelineRole \
+  --assume-role-policy-document '{
+    "Version":"2012-10-17",
+    "Statement":[{
+      "Effect":"Allow",
+      "Principal":{"Service":"codepipeline.amazonaws.com"},
+      "Action":"sts:AssumeRole"
+    }]
+  }'
+aws iam attach-role-policy --role-name ComfyPipelineRole \
+  --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
+~~~
 
-   aws iam create-role --role-name ComfyPipelineRole \
-     --assume-role-policy-document file://iam/trust-pipeline.json
-   aws iam attach-role-policy --role-name ComfyPipelineRole \
-     --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
-   ~~~
 
 6. **Connect your fork via CodeConnections**
 
