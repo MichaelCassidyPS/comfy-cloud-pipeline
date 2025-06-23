@@ -17,9 +17,16 @@ You’ll also need an AWS account with permissions to create EKS, ECR, IAM roles
 
 ---
 
-## One-time bootstrap (~5 min)
+## One-time bootstrap (~10 min)
 
-1. **Install `eksctl` (only if `eksctl version` returns “command not found”)**
+1. **Clone the repo & switch into it (required for the JSON files that follow)**
+
+   ```bash
+   git clone https://github.com/MichaelCassidyPS/comfy-cloud-pipeline.git || true
+   cd comfy-cloud-pipeline
+
+
+2. **Install `eksctl` (only if `eksctl version` returns “command not found”)**
 
 ~~~bash
 # a. Choose architecture 
@@ -46,21 +53,21 @@ eksctl version
 ~~~
 
 
-2. **Create the EKS cluster**
+3. **Create the EKS cluster**
 
    ~~~bash
    eksctl create cluster --name dev-eks --region us-east-1 \
      --managed --nodes 2 --node-type t3.medium
    ~~~
 
-3. **Create a private ECR repo**
+4. **Create a private ECR repo**
 
    ~~~bash
    aws ecr create-repository --repository-name hoodie-api
    ~~~
    After running the above command, press **q** to quit the pager and return to the shell.
 
-4. **Create two IAM roles**
+5. **Create two IAM roles**
 
    *Build role* and *Pipeline role* both use AdministratorAccess (simplest for the course).
 
@@ -76,7 +83,7 @@ eksctl version
      --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
    ~~~
 
-5. **Connect your fork via CodeConnections**
+6. **Connect your fork via CodeConnections**
 
    ~~~bash
    aws codeconnections create-connection \
