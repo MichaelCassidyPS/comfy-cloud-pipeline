@@ -22,18 +22,22 @@ You’ll also need an AWS account with permissions to create EKS, ECR, IAM roles
 1. **Install `eksctl` (only if `eksctl version` returns “command not found”)**
 
 ~~~bash
-# Install eksctl into $HOME/bin (persists across CloudShell sessions)
-ARCH=amd64                                  # set ARCH=arm64 on Graviton CloudShell
-PLATFORM=$(uname -s)_$ARCH                  # Linux_amd64
-curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_${PLATFORM}.tar.gz"
+# a. Choose architecture 
+ARCH=amd64
+PLATFORM=$(uname -s)_$ARCH    # prints Linux_amd64
 
-# unpack and move to personal bin
+# b. Fetch the current release tarball from GitHub
+curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_${PLATFORM}.tar.gz"   # :contentReference[oaicite:1]{index=1}
+
+# c. Unpack to a temp folder
 tar -xzf eksctl_${PLATFORM}.tar.gz -C /tmp
-mkdir -p $HOME/bin
-mv /tmp/eksctl $HOME/bin/
 rm eksctl_${PLATFORM}.tar.gz
 
-# make sure $HOME/bin is on PATH in future sessions and now
+# d. Move it into your personal bin directory (persists between sessions)
+mkdir -p $HOME/bin
+mv /tmp/eksctl $HOME/bin/
+
+# e. Add that directory to PATH (once)
 echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
 source ~/.bashrc
 
