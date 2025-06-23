@@ -19,21 +19,28 @@ You’ll also need an AWS account with permissions to create EKS, ECR, IAM roles
 
 ## One-time bootstrap (~5 min)
 
-1. **Install `eksctl` (only if `eksctl version` is missing)**
+1. **Install `eksctl` (only if `eksctl version` returns “command not found”)**
 
-   ~~~bash
-   # For x86_64 CloudShell; set ARCH=arm64 if you’re on Graviton.
-   ARCH=amd64
-   PLATFORM=$(uname -s)_$ARCH
-   curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_${PLATFORM}.tar.gz"
-   tar -xzf eksctl_${PLATFORM}.tar.gz -C /tmp
-   mkdir -p $HOME/bin
-   mv /tmp/eksctl $HOME/bin/
-   rm eksctl_${PLATFORM}.tar.gz
-   echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
-   source ~/.bashrc
-   eksctl version      # should now print the version
-   ~~~
+~~~bash
+# Install eksctl into $HOME/bin (persists across CloudShell sessions)
+ARCH=amd64                                  # set ARCH=arm64 on Graviton CloudShell
+PLATFORM=$(uname -s)_$ARCH                  # Linux_amd64
+curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_${PLATFORM}.tar.gz"
+
+# unpack and move to personal bin
+tar -xzf eksctl_${PLATFORM}.tar.gz -C /tmp
+mkdir -p $HOME/bin
+mv /tmp/eksctl $HOME/bin/
+rm eksctl_${PLATFORM}.tar.gz
+
+# make sure $HOME/bin is on PATH in future sessions and now
+echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+
+# verify
+eksctl version
+~~~
+
 
 2. **Create the EKS cluster**
 
