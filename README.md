@@ -12,6 +12,7 @@ Here are some instructions to get you running a dev pipeline so you can follow t
 | **eksctl** | ≥ 0.161 |
 | **kubectl** | ≥ 1.29 |
 
+If you run the lab in AWS CloudShell, these three tools are already installed and pre‑authenticated, so you can skip any local setup.
 You’ll also need an AWS account with permissions to create EKS, ECR, IAM roles, and CodeConnections.
 
 ---
@@ -81,4 +82,4 @@ With the cluster, repo, IAM roles, GitHub connection, and services in place you 
 * Patch the image URI into the Deployment.  
 * Forward port 8000 and open **http://localhost:8000** to see **“Hello, Hoodie!”**.
 
-That’s it—no extra steps.
+
