@@ -58,6 +58,7 @@ eksctl version
    ~~~bash
    aws ecr create-repository --repository-name hoodie-api
    ~~~
+   After running the above command, press **q** to quit the pager and return to the shell.
 
 4. **Create two IAM roles**
 
