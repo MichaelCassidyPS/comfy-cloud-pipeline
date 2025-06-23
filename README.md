@@ -111,9 +111,8 @@ kubectl apply -f k8s/payment-deployment.yaml
 kubectl apply -f k8s/deployment.yaml
 
 ~~~
-> **Run each command on its own line in CloudShell (don’t paste them together).**
+> **Run each command on its own line in CloudShell.**
 
-Both Deployments start **2 replicas** and expose ClusterIP services.
 
 ---
 
