@@ -1,41 +1,30 @@
-# buildspec.yml
 version: 0.2
 
 phases:
   install:
     commands:
-      - nohup /usr/local/bin/dockerd-entrypoint.sh &>/tmp/dockerd.log &
-      - timeout 30 sh -c "until docker info; do sleep 3; done"
+      - dnf -y install docker
+      - nohup /usr/local/bin/dockerd-entrypoint.sh >/tmp/dockerd.log 2>&1 &
+      - timeout 30 sh -c "until docker info; do sleep 2; done"
   pre_build:
     commands:
-      - echo Determining AWS account and Region
-      - ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)  
-      - REGION=$AWS_REGION                                                         
-      - REPOSITORY=hoodie-api                                                      
-      - IMAGE_TAG=${CODEBUILD_RESOLVED_SOURCE_VERSION:-latest}                     
+      - ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+      - REGION=$AWS_REGION
+      - REPOSITORY=hoodie-api
+      - IMAGE_TAG=${CODEBUILD_RESOLVED_SOURCE_VERSION:-latest}
       - REPO_URI=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$REPOSITORY
-      - echo "ECR URI is $REPO_URI"
-
-      # ---- ensure repository exists -----------------------------------------
-      - aws ecr describe-repositories --repository-names $REPOSITORY >/dev/null 2>&1 || \
-        aws ecr create-repository --repository-name $REPOSITORY                    
-
-      # ---- authenticate Docker to ECR ---------------------------------------
-      - aws ecr get-login-password --region $REGION | \
-        docker login --username AWS --password-stdin $REPO_URI                     
+      - aws ecr describe-repositories --repository-names $REPOSITORY || \
+        aws ecr create-repository --repository-name $REPOSITORY
+      - aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $REPO_URI
   build:
     commands:
-      - echo "Building Docker image $REPO_URI:$IMAGE_TAG"
-      - docker build -t $REPO_URI:$IMAGE_TAG .                                    
+      - docker build -t $REPO_URI:$IMAGE_TAG .
       - docker tag  $REPO_URI:$IMAGE_TAG $REPO_URI:latest
   post_build:
     commands:
-      - echo "Pushing tags to ECR"
       - docker push $REPO_URI:$IMAGE_TAG
       - docker push $REPO_URI:latest
-      - echo "Writing imageDetail.json artifact"
-      - printf '[{"name":"HoodieApiImage","imageUri":"%s"}]' \
-        $REPO_URI:$IMAGE_TAG > imageDetail.json                                    
+      - printf '[{"name":"HoodieApiImage","imageUri":"%s"}]' $REPO_URI:$IMAGE_TAG > imageDetail.json
 
 artifacts:
   files:
