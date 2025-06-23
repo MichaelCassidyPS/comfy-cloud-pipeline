@@ -70,31 +70,31 @@ eksctl version
 5. **Create two IAM roles**
 
 ~~~bash
-# Build role for CodeBuild
+########################################
+# 1) Turn off the interactive pager
+########################################
+export AWS_PAGER=""
+
+########################################
+# 2) Build role for CodeBuild
+########################################
 aws iam create-role --role-name ComfyBuildRole \
-  --assume-role-policy-document '{
-    "Version":"2012-10-17",
-    "Statement":[{
-      "Effect":"Allow",
-      "Principal":{"Service":"codebuild.amazonaws.com"},
-      "Action":"sts:AssumeRole"
-    }]
-  }'
+  --assume-role-policy-document \
+'{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"codebuild.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
+
 aws iam attach-role-policy --role-name ComfyBuildRole \
   --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
 
-# Pipeline role for CodePipeline
+########################################
+# 3) Pipeline role for CodePipeline
+########################################
 aws iam create-role --role-name ComfyPipelineRole \
-  --assume-role-policy-document '{
-    "Version":"2012-10-17",
-    "Statement":[{
-      "Effect":"Allow",
-      "Principal":{"Service":"codepipeline.amazonaws.com"},
-      "Action":"sts:AssumeRole"
-    }]
-  }'
+  --assume-role-policy-document \
+'{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"codepipeline.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
+
 aws iam attach-role-policy --role-name ComfyPipelineRole \
   --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
+
 ~~~
 
 
