@@ -29,12 +29,22 @@ You’ll also need an AWS account with permissions to create EKS, ECR, IAM roles
 2. **Install `eksctl` (only if `eksctl version` returns “command not found”)**
 
 ~~~bash
-curl --silent --location \
-  "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" \
-  | tar xz -C /tmp && sudo mv /tmp/eksctl /usr/local/bin
+# 1. Download and unpack the latest eksctl
+curl -sSL "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" \
+  | tar xz -C /tmp
 
+# 2. Move into your personal bin (persists across sessions)
+mkdir -p $HOME/bin
+mv /tmp/eksctl $HOME/bin/eksctl
 
-# verify
+# 3. Ensure $HOME/bin is in your login PATH
+grep -qxF 'export PATH=$HOME/bin:$PATH' ~/.bash_profile \
+  || echo 'export PATH=$HOME/bin:$PATH' >> ~/.bash_profile
+
+# 4. Reload your login profile so eksctl is immediately available
+source ~/.bash_profile
+
+# 5. Verify installation
 eksctl version
 ~~~
 
