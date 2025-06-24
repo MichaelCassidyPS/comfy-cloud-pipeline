@@ -29,24 +29,10 @@ You’ll also need an AWS account with permissions to create EKS, ECR, IAM roles
 2. **Install `eksctl` (only if `eksctl version` returns “command not found”)**
 
 ~~~bash
-# a. Choose architecture 
-ARCH=amd64
-PLATFORM=$(uname -s)_$ARCH    # prints Linux_amd64
+curl --silent --location \
+  "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" \
+  | tar xz -C /tmp && sudo mv /tmp/eksctl /usr/local/bin
 
-# b. Fetch the current release tarball from GitHub
-curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_${PLATFORM}.tar.gz"   # :contentReference[oaicite:1]{index=1}
-
-# c. Unpack to a temp folder
-tar -xzf eksctl_${PLATFORM}.tar.gz -C /tmp
-rm eksctl_${PLATFORM}.tar.gz
-
-# d. Move it into your personal bin directory (persists between sessions)
-mkdir -p $HOME/bin
-mv /tmp/eksctl $HOME/bin/
-
-# e. Add that directory to PATH (once)
-echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
-source ~/.bashrc
 
 # verify
 eksctl version
