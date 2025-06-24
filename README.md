@@ -26,25 +26,25 @@ You’ll also need an AWS account with permissions to create EKS, ECR, IAM roles
    cd comfy-cloud-pipeline
 
 
-2. **Install `eksctl` (only if `eksctl version` returns “command not found”)**
+2. **Install `eksctl`**
 
 ~~~bash
-# 1. Download and unpack the latest eksctl
+# 1) Download and unpack the latest eksctl
 curl -sSL "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" \
   | tar xz -C /tmp
 
-# 2. Move into your personal bin (persists across sessions)
-mkdir -p $HOME/bin
-mv /tmp/eksctl $HOME/bin/eksctl
+# 2) Move into your persistent home directory
+mkdir -p "$HOME/bin"
+mv /tmp/eksctl "$HOME/bin/eksctl"
 
-# 3. Ensure $HOME/bin is in your login PATH
+# 3) Ensure ~/bin is in your login shell PATH
 grep -qxF 'export PATH=$HOME/bin:$PATH' ~/.bash_profile \
   || echo 'export PATH=$HOME/bin:$PATH' >> ~/.bash_profile
 
-# 4. Reload your login profile so eksctl is immediately available
-source ~/.bash_profile
+# 4) Export the new PATH in the current shell
+export PATH="$HOME/bin:$PATH"
 
-# 5. Verify installation
+# 5) Verify installation
 eksctl version
 ~~~
 
