@@ -119,6 +119,6 @@ With the cluster, repo, IAM roles, GitHub connection, and services in place you 
 * Create the **CodeBuild** project `hoodie-build`.  
 * Let the build push the image to **ECR**.  
 * Patch the image URI into the Deployment.  
-* Forward port 8000 and open **http://localhost:8000** to see **“Hello, Hoodie!”**.
+* Preview the service in CloudShell.
 
 
