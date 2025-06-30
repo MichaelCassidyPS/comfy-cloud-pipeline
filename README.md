@@ -52,13 +52,8 @@ eksctl version
 3. **Create the EKS cluster**
 
    ~~~bash
-   eksctl create cluster \
-     --name dev-eks \
-     --region us-east-1 \
-     --nodes 2 \
-     --node-type t3.medium \
-     --vpc-nat-mode=Disable \
-     --node-private-networking=false
+   eksctl create cluster --name dev-eks --region us-east-1 \
+     --managed --nodes 2 --node-type t3.medium \
    ~~~
 
 4. **Create a private ECR repo**
