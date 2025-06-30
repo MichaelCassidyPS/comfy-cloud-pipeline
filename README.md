@@ -53,7 +53,7 @@ eksctl version
 
    ~~~bash
    eksctl create cluster --name dev-eks --region us-east-1 \
-     --managed --nodes 2 --node-type t3.medium \
+     --managed --nodes 2 --node-type t3.medium
    ~~~
 
 4. **Create a private ECR repo**
